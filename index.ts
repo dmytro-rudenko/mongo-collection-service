@@ -9,21 +9,42 @@ const schema = {
 export class DatabaseCollection {
   collection: string;
   model: any;
+  connectionUrl: string | undefined;
+  mongoose: any;
+  schema: any;
 
   constructor({
     collection,
     schema,
+    connectionUrl,
+    mongoose,
   }: {
     collection: string;
-    schema: {
-      [key: string]: any;
-    };
+    schema: any;
+    connectionUrl?: string | undefined;
+    mongoose?: any;
   }) {
+    this.mongoose = mongoose;
     this.collection = collection;
+    this.schema = schema;
+    this.connectionUrl = connectionUrl;
+  }
 
-    const ItemSchema: Schema = new Schema(schema);
+  async connect(connectionUrl: string) {
+    await this.mongoose.connect(connectionUrl);
+  }
 
-    this.model = mongoose.model(collection, ItemSchema);
+  async disconnect() {
+    await this.mongoose.disconnect();
+  }
+
+  async init() {
+    const schema = new this.mongoose.Schema(this.schema);
+    if (this.connectionUrl) {
+        await this.connect(this.connectionUrl);
+    }
+
+    this.model = this.mongoose.model(this.collection, schema);
   }
 }
 
