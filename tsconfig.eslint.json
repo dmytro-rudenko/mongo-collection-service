@@ -1,0 +1,14 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "allowJs": true,
+        "skipLibCheck": true,
+        "exclude": ["node_modules"]
+    },
+    "include": [
+        "./.*.cjs", // root commonjs files
+        "./.*.js", // root javascript config files
+        "**/*.js", // javascript files
+        "**/*.ts" // typescript files
+    ]
+}
