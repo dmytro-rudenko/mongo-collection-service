@@ -6,7 +6,7 @@ const schema = {
   completed: { type: Boolean, default: false },
 };
 
-class DatabaseCollection {
+export class DatabaseCollection {
   collection: string;
   model: any;
 
